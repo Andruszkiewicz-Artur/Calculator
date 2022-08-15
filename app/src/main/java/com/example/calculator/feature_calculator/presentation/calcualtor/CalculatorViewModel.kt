@@ -17,16 +17,22 @@ class CalculatorViewModel @Inject constructor(
     private val _state = mutableStateOf(CalculatorState())
     val state: State<CalculatorState> = _state
 
-    var presentNumber = "0"
+    var presentNumber = mutableStateOf("0")
 
     var history = mutableStateListOf<HistoryState>()
 
     fun onEvent(event: CalculatorEvent) {
         when (event) {
             is CalculatorEvent.addNumberToFiger -> {
-                _state.value = state.value.copy(
-                    currentNumber = _state.value.currentNumber + event.number
-                )
+                if(presentNumber.value == "0") {
+                    _state.value = state.value.copy(
+                        currentNumber = event.number
+                    )
+                } else {
+                    _state.value = state.value.copy(
+                        currentNumber = _state.value.currentNumber + event.number
+                    )
+                }
             }
             is CalculatorEvent.Add -> {
                 addOperator('+')
@@ -41,9 +47,11 @@ class CalculatorViewModel @Inject constructor(
                 addOperator('/')
             }
             is CalculatorEvent.PlusMinus -> {
-                _state.value = state.value.copy(
-                    currentNumber = if(_state.value.currentNumber.first() == '-') _state.value.currentNumber.substring(0) else '-' + _state.value.currentNumber
-                )
+                if(_state.value.currentNumber != "0") {
+                    _state.value = state.value.copy(
+                        currentNumber = if(_state.value.currentNumber.first() == '-') _state.value.currentNumber.replace('-', ' ').toFloat().toString().replace(".0", "") else '-' + _state.value.currentNumber
+                    )
+                }
             }
             is CalculatorEvent.Clear -> {
                 _state.value = state.value.copy(
@@ -59,7 +67,6 @@ class CalculatorViewModel @Inject constructor(
             }
             is CalculatorEvent.Result -> {
                 makeOperation()
-                presentNumber = state.value.currentNumber
             }
             is CalculatorEvent.Percent -> {
                 _state.value = state.value.copy(
@@ -67,6 +74,8 @@ class CalculatorViewModel @Inject constructor(
                 )
             }
         }
+
+        presentNumber.value = _state.value.currentNumber
     }
 
     private fun addOperator(char: Char) {
@@ -75,7 +84,7 @@ class CalculatorViewModel @Inject constructor(
             currentNumber = "0",
             char = char
         )
-        presentNumber = state.value.currentNumber
+        presentNumber.value = "0"
     }
 
     private fun makeOperation() {
@@ -92,7 +101,7 @@ class CalculatorViewModel @Inject constructor(
                         result = result
                     )
                 )
-                presentNumber = result.toString()
+                presentNumber.value = result.toString()
                 resetState()
             }
             '-' -> {
@@ -106,7 +115,7 @@ class CalculatorViewModel @Inject constructor(
                         result = result
                     )
                 )
-                presentNumber = result.toString()
+                presentNumber.value = result.toString()
                 resetState()
             }
             '*' -> {
@@ -120,7 +129,7 @@ class CalculatorViewModel @Inject constructor(
                         result = result
                     )
                 )
-                presentNumber = result.toString()
+                presentNumber.value = result.toString()
                 resetState()
             }
             '/' -> {
@@ -137,7 +146,7 @@ class CalculatorViewModel @Inject constructor(
                             result = result
                         )
                     )
-                    presentNumber = result.toString()
+                    presentNumber.value = result.toString()
                     resetState()
                 }
             }
