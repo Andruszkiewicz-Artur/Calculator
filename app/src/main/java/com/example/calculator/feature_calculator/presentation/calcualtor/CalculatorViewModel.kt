@@ -70,12 +70,14 @@ class CalculatorViewModel @Inject constructor(
             }
             is CalculatorEvent.Percent -> {
                 _state.value = state.value.copy(
-                    currentNumber = (_state.value.currentNumber.toFloat() / 100).toString()
+                    currentNumber = (_state.value.currentNumber.toFloat() / 100).toString().replace(".0", "")
                 )
             }
         }
 
-        presentNumber.value = _state.value.currentNumber
+        if(event != CalculatorEvent.Result) {
+            presentNumber.value = _state.value.currentNumber
+        }
     }
 
     private fun addOperator(char: Char) {
@@ -89,9 +91,11 @@ class CalculatorViewModel @Inject constructor(
 
     private fun makeOperation() {
         val fState = _state.value
+        var result: Float = 0f
+
         when (fState.char) {
             '+' -> {
-                val result = fState.lastNumber + fState.currentNumber.toFloat()
+                result = fState.lastNumber + fState.currentNumber.toFloat()
                 history.add(
                     index = 0,
                     element = HistoryState(
@@ -105,7 +109,7 @@ class CalculatorViewModel @Inject constructor(
                 resetState()
             }
             '-' -> {
-                val result = fState.lastNumber - fState.currentNumber.toFloat()
+                result = fState.lastNumber - fState.currentNumber.toFloat()
                 history.add(
                     index = 0,
                     element = HistoryState(
@@ -119,7 +123,7 @@ class CalculatorViewModel @Inject constructor(
                 resetState()
             }
             '*' -> {
-                val result = fState.lastNumber * fState.currentNumber.toFloat()
+                result = fState.lastNumber * fState.currentNumber.toFloat()
                 history.add(
                     index = 0,
                     element = HistoryState(
@@ -136,7 +140,7 @@ class CalculatorViewModel @Inject constructor(
                 if (fState.currentNumber.toFloat() == 0f) {
                     Toast.makeText(application, "You can`t divide via 0", Toast.LENGTH_LONG).show()
                 } else {
-                    val result = fState.lastNumber + fState.currentNumber.toFloat()
+                    result = fState.lastNumber / fState.currentNumber.toFloat()
                     history.add(
                         index = 0,
                         element = HistoryState(
@@ -146,14 +150,15 @@ class CalculatorViewModel @Inject constructor(
                             result = result
                         )
                     )
-                    presentNumber.value = result.toString()
                     resetState()
                 }
             }
             else -> {
-
+                Toast.makeText(application, "You need write new sentence", Toast.LENGTH_LONG).show()
             }
         }
+
+        presentNumber.value = result.toString().replace(".0", "")
     }
 
     private fun resetState() {
