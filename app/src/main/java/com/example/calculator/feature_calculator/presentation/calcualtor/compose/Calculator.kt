@@ -1,20 +1,25 @@
 package com.example.calculator.feature_calculator.presentation.calcualtor.compose
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Add
-import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Remove
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.icons.twotone.Exposure
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -31,6 +36,7 @@ fun Calculator(
     val buttonSize = (width/5).dp
     val breakSize = buttonSize/5
     val fontSize = width/13
+    var isHistory by remember { mutableStateOf(false) }
 
     Column(
         verticalArrangement = Arrangement.Bottom,
@@ -39,9 +45,24 @@ fun Calculator(
             .fillMaxSize()
             .padding(bottom = breakSize)
     ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = breakSize)
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.FormatListNumbered,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(fontSize.dp)
+                    .clickable {
+                        isHistory = true
+                    }
+            )
+        }
         Text(
             text = viewModel.presentNumber.value,
-            fontSize = (fontSize * 2).sp,
+            fontSize = (fontSize * 1.75).sp,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(buttonSize / 5),
@@ -354,6 +375,56 @@ fun Calculator(
                         viewModel.onEvent(CalculatorEvent.Result)
                     }
             )
+        }
+    }
+
+    if(isHistory) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .background(
+                    color = Color.Black.copy(alpha = 0.3f)
+                )
+                .fillMaxSize()
+                .clickable {
+                    isHistory = false
+                }
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(0.7f)
+                    .background(
+                        color = MaterialTheme.colorScheme.background,
+                        shape = RoundedCornerShape(40f)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        shape = RoundedCornerShape(40f)
+                    )
+                    .padding(10.dp)
+            ) {
+                if(viewModel.history.isNotEmpty()) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        itemsIndexed(viewModel.history) { index, item ->
+                            Text(
+                                text = "${index + 1}. ${item.firstNumber} ${item.char} ${item.secondNumber} = ${item.result}".replace(".0", "")
+                            )
+                        }
+                    }
+                } else {
+                    Text(
+                        text = "History is empty right now!",
+                        color = MaterialTheme.colorScheme.secondaryContainer,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
+            }
         }
     }
 }

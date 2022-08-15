@@ -29,9 +29,13 @@ class CalculatorViewModel @Inject constructor(
                         currentNumber = event.number
                     )
                 } else {
-                    _state.value = state.value.copy(
-                        currentNumber = _state.value.currentNumber + event.number
-                    )
+                    if(_state.value.currentNumber.length < 10) {
+                        _state.value = state.value.copy(
+                            currentNumber = _state.value.currentNumber + event.number
+                        )
+                    } else {
+                        Toast.makeText(application, "Number can contains max 10 figures", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
             is CalculatorEvent.Add -> {
