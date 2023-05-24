@@ -6,13 +6,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 
-@HiltViewModel
-class CalculatorViewModel @Inject constructor(
-    private val application: Application
-): ViewModel() {
+class CalculatorViewModel (): ViewModel() {
 
     private val _state = mutableStateOf(CalculatorState())
     val state: State<CalculatorState> = _state
@@ -34,7 +29,7 @@ class CalculatorViewModel @Inject constructor(
                             currentNumber = _state.value.currentNumber + event.number
                         )
                     } else {
-                        Toast.makeText(application, "Number can contains max 10 figures", Toast.LENGTH_LONG).show()
+//                        Toast.makeText(application, "Number can contains max 10 figures", Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -142,7 +137,7 @@ class CalculatorViewModel @Inject constructor(
             }
             '/' -> {
                 if (fState.currentNumber.toFloat() == 0f) {
-                    Toast.makeText(application, "You can`t divide via 0", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(application, "You can`t divide via 0", Toast.LENGTH_LONG).show()
                 } else {
                     result = fState.lastNumber / fState.currentNumber.toFloat()
                     history.add(
@@ -158,7 +153,7 @@ class CalculatorViewModel @Inject constructor(
                 }
             }
             else -> {
-                Toast.makeText(application, "You need write new sentence", Toast.LENGTH_LONG).show()
+//                Toast.makeText(application, "You need write new sentence", Toast.LENGTH_LONG).show()
             }
         }
 

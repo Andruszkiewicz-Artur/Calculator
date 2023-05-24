@@ -5,13 +5,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.twotone.Close
 import androidx.compose.material.icons.twotone.Exposure
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -24,19 +23,30 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.calculator.feature_calculator.presentation.calcualtor.CalculatorEvent
 import com.example.calculator.feature_calculator.presentation.calcualtor.CalculatorViewModel
 
 @Composable
 fun Calculator(
-    viewModel: CalculatorViewModel = hiltViewModel()
+    viewModel: CalculatorViewModel = CalculatorViewModel()
 ) {
     val width = LocalContext.current.resources.configuration.screenWidthDp
     val buttonSize = (width/5).dp
     val breakSize = buttonSize/5
     val fontSize = width/13
     var isHistory by remember { mutableStateOf(false) }
+
+    Icon(
+        imageVector = Icons.Outlined.FormatListNumbered,
+        contentDescription = null,
+        modifier = Modifier
+            .padding(start = breakSize)
+            .padding(top = breakSize)
+            .size(fontSize.dp)
+            .clickable {
+                isHistory = true
+            }
+    )
 
     Column(
         verticalArrangement = Arrangement.Bottom,
@@ -45,21 +55,6 @@ fun Calculator(
             .fillMaxSize()
             .padding(bottom = breakSize)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = breakSize)
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.FormatListNumbered,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(fontSize.dp)
-                    .clickable {
-                        isHistory = true
-                    }
-            )
-        }
         Text(
             text = viewModel.presentNumber.value,
             fontSize = (fontSize * 1.75).sp,
@@ -186,7 +181,7 @@ fun Calculator(
             ButtonItem(
                 color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = fontSize,
-                image = Icons.Outlined.Close,
+                image = Icons.TwoTone.Close,
                 modifier = Modifier
                     .size(buttonSize)
                     .background(
@@ -399,7 +394,7 @@ fun Calculator(
                     )
                     .border(
                         width = 1.dp,
-                        color = MaterialTheme.colorScheme.tertiary,
+                        color = MaterialTheme.colorScheme.primary,
                         shape = RoundedCornerShape(40f)
                     )
                     .padding(10.dp)
