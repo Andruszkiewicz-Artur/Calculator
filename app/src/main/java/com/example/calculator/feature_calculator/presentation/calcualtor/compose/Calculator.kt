@@ -34,19 +34,6 @@ fun Calculator(
     val buttonSize = (width/5).dp
     val breakSize = buttonSize/5
     val fontSize = width/13
-    var isHistory by remember { mutableStateOf(false) }
-
-    Icon(
-        imageVector = Icons.Outlined.FormatListNumbered,
-        contentDescription = null,
-        modifier = Modifier
-            .padding(start = breakSize)
-            .padding(top = breakSize)
-            .size(fontSize.dp)
-            .clickable {
-                isHistory = true
-            }
-    )
 
     Column(
         verticalArrangement = Arrangement.Bottom,
@@ -370,56 +357,6 @@ fun Calculator(
                         viewModel.onEvent(CalculatorEvent.Result)
                     }
             )
-        }
-    }
-
-    if(isHistory) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .background(
-                    color = Color.Black.copy(alpha = 0.3f)
-                )
-                .fillMaxSize()
-                .clickable {
-                    isHistory = false
-                }
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize(0.7f)
-                    .background(
-                        color = MaterialTheme.colorScheme.background,
-                        shape = RoundedCornerShape(40f)
-                    )
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = RoundedCornerShape(40f)
-                    )
-                    .padding(10.dp)
-            ) {
-                if(viewModel.history.isNotEmpty()) {
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                    ) {
-                        itemsIndexed(viewModel.history) { index, item ->
-                            Text(
-                                text = "${index + 1}. ${item.firstNumber} ${item.char} ${item.secondNumber} = ${item.result}".replace(".0", "")
-                            )
-                        }
-                    }
-                } else {
-                    Text(
-                        text = "History is empty right now!",
-                        color = MaterialTheme.colorScheme.secondaryContainer,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    )
-                }
-            }
         }
     }
 }

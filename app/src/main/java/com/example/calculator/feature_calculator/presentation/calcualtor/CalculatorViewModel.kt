@@ -14,8 +14,6 @@ class CalculatorViewModel (): ViewModel() {
 
     var presentNumber = mutableStateOf("0")
 
-    var history = mutableStateListOf<HistoryState>()
-
     fun onEvent(event: CalculatorEvent) {
         when (event) {
             is CalculatorEvent.addNumberToFiger -> {
@@ -95,43 +93,16 @@ class CalculatorViewModel (): ViewModel() {
         when (fState.char) {
             '+' -> {
                 result = fState.lastNumber + fState.currentNumber.toFloat()
-                history.add(
-                    index = 0,
-                    element = HistoryState(
-                        firstNumber = fState.lastNumber,
-                        secondNumber = fState.currentNumber.toFloat(),
-                        char = '+',
-                        result = result
-                    )
-                )
                 presentNumber.value = result.toString()
                 resetState()
             }
             '-' -> {
                 result = fState.lastNumber - fState.currentNumber.toFloat()
-                history.add(
-                    index = 0,
-                    element = HistoryState(
-                        firstNumber = fState.lastNumber,
-                        secondNumber = fState.currentNumber.toFloat(),
-                        char = '-',
-                        result = result
-                    )
-                )
                 presentNumber.value = result.toString()
                 resetState()
             }
             '*' -> {
                 result = fState.lastNumber * fState.currentNumber.toFloat()
-                history.add(
-                    index = 0,
-                    element = HistoryState(
-                        firstNumber = fState.lastNumber,
-                        secondNumber = fState.currentNumber.toFloat(),
-                        char = '+',
-                        result = result
-                    )
-                )
                 presentNumber.value = result.toString()
                 resetState()
             }
@@ -140,15 +111,6 @@ class CalculatorViewModel (): ViewModel() {
 //                    Toast.makeText(application, "You can`t divide via 0", Toast.LENGTH_LONG).show()
                 } else {
                     result = fState.lastNumber / fState.currentNumber.toFloat()
-                    history.add(
-                        index = 0,
-                        element = HistoryState(
-                            firstNumber = fState.lastNumber,
-                            secondNumber = fState.currentNumber.toFloat(),
-                            char = '+',
-                            result = result
-                        )
-                    )
                     resetState()
                 }
             }
