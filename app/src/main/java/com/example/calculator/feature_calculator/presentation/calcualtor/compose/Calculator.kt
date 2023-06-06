@@ -74,7 +74,7 @@ fun Calculator(
             ButtonItem(
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = fontSize,
-                image = Icons.TwoTone.Exposure,
+                char = '^',
                 modifier = Modifier
                     .padding(end = breakSize)
                     .size(buttonSize)
@@ -83,7 +83,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.addOperationChar("+"))
+                        viewModel.onEvent(CalculatorEvent.addOperationChar("^"))
                     }
             )
             ButtonItem(

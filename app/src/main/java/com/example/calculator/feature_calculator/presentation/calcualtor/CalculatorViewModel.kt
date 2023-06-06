@@ -41,7 +41,13 @@ class CalculatorViewModel: ViewModel() {
                 }
             }
             is CalculatorEvent.Percent -> {
+                val value = resultOfTask(task.value)
+                val result = resultOfTask(value + "/100")
 
+                if (result != null) {
+                    history.add("(task.value)%")
+                    task.value = result
+                }
             }
             CalculatorEvent.Clear -> {
                 task.value = "0"
