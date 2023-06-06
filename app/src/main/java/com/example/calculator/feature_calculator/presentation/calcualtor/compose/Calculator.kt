@@ -10,8 +10,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.twotone.Add
 import androidx.compose.material.icons.twotone.Close
 import androidx.compose.material.icons.twotone.Exposure
+import androidx.compose.material.icons.twotone.Remove
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,6 +42,7 @@ fun Calculator(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(bottom = breakSize)
     ) {
         Text(
@@ -57,63 +60,40 @@ fun Calculator(
                 .padding(bottom = breakSize)
         ) {
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = fontSize,
                 char = 'C',
+                colorType = ColorOption.standard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surface,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.Clear)
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.Clear)
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = fontSize,
                 char = '^',
+                colorType = ColorOption.standard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surface,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addOperationChar("^"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addOperationChar("^"))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = fontSize,
                 char = '%',
+                colorType = ColorOption.standard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surface,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.Percent)
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.Percent)
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontSize = fontSize,
                 char = '/',
+                colorType = ColorOption.primary,
                 modifier = Modifier
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addOperationChar("/"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addOperationChar("/"))
+                }
             )
         }
         Row(
@@ -121,63 +101,40 @@ fun Calculator(
                 .padding(bottom = breakSize)
         ) {
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = fontSize,
                 char = '7',
+                colorType = ColorOption.secondStandard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addFigure("7"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addFigure("7"))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = fontSize,
                 char = '8',
+                colorType = ColorOption.secondStandard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addFigure("8"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addFigure("8"))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = fontSize,
                 char = '9',
+                colorType = ColorOption.secondStandard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addFigure("9"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addFigure("9"))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontSize = fontSize,
                 image = Icons.TwoTone.Close,
+                colorType = ColorOption.primary,
                 modifier = Modifier
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addOperationChar("*"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addOperationChar("*"))
+                }
             )
         }
         Row(
@@ -185,127 +142,82 @@ fun Calculator(
                 .padding(bottom = breakSize)
         ) {
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = fontSize,
                 char = '4',
+                colorType = ColorOption.secondStandard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addFigure("4"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addFigure("4"))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = fontSize,
                 char = '5',
+                colorType = ColorOption.secondStandard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addFigure("5"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addFigure("5"))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = fontSize,
                 char = '6',
+                colorType = ColorOption.secondStandard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addFigure("6"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addFigure("6"))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontSize = fontSize,
-                image = Icons.Outlined.Remove,
+                image = Icons.TwoTone.Remove,
+                colorType = ColorOption.primary,
                 modifier = Modifier
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addOperationChar("-"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addOperationChar("-"))
+                }
             )
         }
         Row(
             modifier = Modifier
                 .padding(bottom = breakSize)
         ) {
+
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = fontSize,
                 char = '1',
+                colorType = ColorOption.secondStandard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addFigure("1"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addFigure("4"))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = fontSize,
                 char = '2',
+                colorType = ColorOption.secondStandard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addFigure("2"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addFigure("5"))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = fontSize,
                 char = '3',
+                colorType = ColorOption.secondStandard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addFigure("3"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addFigure("6"))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onPrimary,
-                fontSize = fontSize,
-                image = Icons.Outlined.Add,
+                image = Icons.TwoTone.Add,
+                colorType = ColorOption.primary,
                 modifier = Modifier
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.primary,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addOperationChar("+"))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addOperationChar("+"))
+                }
             )
         }
         Row(
@@ -313,49 +225,32 @@ fun Calculator(
                 .padding(bottom = breakSize)
         ) {
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = fontSize,
                 char = '0',
+                colorType = ColorOption.secondStandard,
+                aspectRation = 2f,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .height(buttonSize)
-                    .width((buttonSize * 2) + breakSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addFigure("0"))
-                    }
+                    .weight(2f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addFigure("0"))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                fontSize = fontSize,
-                char = ',',
+                char = '.',
+                colorType = ColorOption.secondStandard,
                 modifier = Modifier
-                    .padding(end = breakSize)
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.addOperationChar("."))
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.addOperationChar("."))
+                }
             )
             ButtonItem(
-                color = MaterialTheme.colorScheme.onTertiary,
-                fontSize = fontSize,
                 char = '=',
+                colorType = ColorOption.accent,
                 modifier = Modifier
-                    .size(buttonSize)
-                    .background(
-                        color = MaterialTheme.colorScheme.tertiary,
-                        shape = CircleShape
-                    )
-                    .clickable {
-                        viewModel.onEvent(CalculatorEvent.Result)
-                    }
+                    .weight(1f),
+                onClick = {
+                    viewModel.onEvent(CalculatorEvent.Result)
+                }
             )
         }
     }
