@@ -28,7 +28,7 @@ import com.example.calculator.feature_calculator.presentation.calcualtor.Calcula
 
 @Composable
 fun Calculator(
-    viewModel: CalculatorViewModel = CalculatorViewModel()
+    viewModel: CalculatorViewModel
 ) {
     val width = LocalContext.current.resources.configuration.screenWidthDp
     val buttonSize = (width/5).dp
@@ -43,7 +43,7 @@ fun Calculator(
             .padding(bottom = breakSize)
     ) {
         Text(
-            text = viewModel.presentNumber.value,
+            text = viewModel.task.value,
             fontSize = (fontSize * 1.75).sp,
             modifier = Modifier
                 .fillMaxWidth()
@@ -83,7 +83,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.PlusMinus)
+                        viewModel.onEvent(CalculatorEvent.addOperationChar("+"))
                     }
             )
             ButtonItem(
@@ -112,7 +112,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.Divide)
+                        viewModel.onEvent(CalculatorEvent.addOperationChar("/"))
                     }
             )
         }
@@ -132,7 +132,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.addNumberToFiger("7"))
+                        viewModel.onEvent(CalculatorEvent.addFigure("7"))
                     }
             )
             ButtonItem(
@@ -147,7 +147,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.addNumberToFiger("8"))
+                        viewModel.onEvent(CalculatorEvent.addFigure("8"))
                     }
             )
             ButtonItem(
@@ -162,7 +162,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.addNumberToFiger("9"))
+                        viewModel.onEvent(CalculatorEvent.addFigure("9"))
                     }
             )
             ButtonItem(
@@ -176,7 +176,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.Multiply)
+                        viewModel.onEvent(CalculatorEvent.addOperationChar("*"))
                     }
             )
         }
@@ -196,7 +196,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.addNumberToFiger("4"))
+                        viewModel.onEvent(CalculatorEvent.addFigure("4"))
                     }
             )
             ButtonItem(
@@ -211,7 +211,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.addNumberToFiger("5"))
+                        viewModel.onEvent(CalculatorEvent.addFigure("5"))
                     }
             )
             ButtonItem(
@@ -226,7 +226,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.addNumberToFiger("6"))
+                        viewModel.onEvent(CalculatorEvent.addFigure("6"))
                     }
             )
             ButtonItem(
@@ -240,7 +240,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.Subtract)
+                        viewModel.onEvent(CalculatorEvent.addOperationChar("-"))
                     }
             )
         }
@@ -260,7 +260,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.addNumberToFiger("1"))
+                        viewModel.onEvent(CalculatorEvent.addFigure("1"))
                     }
             )
             ButtonItem(
@@ -275,7 +275,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.addNumberToFiger("2"))
+                        viewModel.onEvent(CalculatorEvent.addFigure("2"))
                     }
             )
             ButtonItem(
@@ -290,7 +290,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.addNumberToFiger("3"))
+                        viewModel.onEvent(CalculatorEvent.addFigure("3"))
                     }
             )
             ButtonItem(
@@ -304,7 +304,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.Add)
+                        viewModel.onEvent(CalculatorEvent.addOperationChar("+"))
                     }
             )
         }
@@ -325,7 +325,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.addNumberToFiger("0"))
+                        viewModel.onEvent(CalculatorEvent.addFigure("0"))
                     }
             )
             ButtonItem(
@@ -340,7 +340,7 @@ fun Calculator(
                         shape = CircleShape
                     )
                     .clickable {
-                        viewModel.onEvent(CalculatorEvent.Comma)
+                        viewModel.onEvent(CalculatorEvent.addOperationChar("."))
                     }
             )
             ButtonItem(

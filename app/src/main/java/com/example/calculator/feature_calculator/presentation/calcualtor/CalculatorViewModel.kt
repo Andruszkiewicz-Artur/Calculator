@@ -1,132 +1,51 @@
 package com.example.calculator.feature_calculator.presentation.calcualtor
 
-import android.app.Application
-import android.widget.Toast
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateListOf
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.example.calculator.feature_calculator.unit.calculation.isInteger
+import com.example.calculator.feature_calculator.unit.calculation.resultOfTask
 
-class CalculatorViewModel (): ViewModel() {
+class CalculatorViewModel: ViewModel() {
 
-    private val _state = mutableStateOf(CalculatorState())
-    val state: State<CalculatorState> = _state
+    val history: MutableList<String> = mutableListOf()
 
-    var presentNumber = mutableStateOf("0")
+    var task = mutableStateOf("0")
 
     fun onEvent(event: CalculatorEvent) {
         when (event) {
-            is CalculatorEvent.addNumberToFiger -> {
-                if(presentNumber.value == "0") {
-                    _state.value = state.value.copy(
-                        currentNumber = event.number
-                    )
+            is CalculatorEvent.addFigure -> {
+                if(task.value != "0") {
+                    task.value += event.figure
                 } else {
-                    if(_state.value.currentNumber.length < 10) {
-                        _state.value = state.value.copy(
-                            currentNumber = _state.value.currentNumber + event.number
-                        )
+                    task.value = event.figure
+                }
+            }
+            is CalculatorEvent.addOperationChar -> {
+                if (isInteger(task.value.last().toString())) {
+                    if (task.value != "0" || event.operationChar == ".") {
+                        task.value += event.operationChar
                     } else {
-//                        Toast.makeText(application, "Number can contains max 10 figures", Toast.LENGTH_LONG).show()
+                        if (event.operationChar == "-") {
+                            task.value = event.operationChar
+                        }
                     }
                 }
             }
-            is CalculatorEvent.Add -> {
-                addOperator('+')
-            }
-            is CalculatorEvent.Subtract -> {
-                addOperator('-')
-            }
-            is CalculatorEvent.Multiply -> {
-                addOperator('*')
-            }
-            is CalculatorEvent.Divide -> {
-                addOperator('/')
-            }
-            is CalculatorEvent.PlusMinus -> {
-                if(_state.value.currentNumber != "0") {
-                    _state.value = state.value.copy(
-                        currentNumber = if(_state.value.currentNumber.first() == '-') _state.value.currentNumber.replace('-', ' ').toFloat().toString().replace(".0", "") else '-' + _state.value.currentNumber
-                    )
-                }
-            }
-            is CalculatorEvent.Clear -> {
-                _state.value = state.value.copy(
-                    currentNumber = "0"
-                )
-            }
-            is CalculatorEvent.Comma -> {
-                if(!_state.value.currentNumber.contains('.')) {
-                    _state.value = state.value.copy(
-                        currentNumber = _state.value.currentNumber + '.'
-                    )
-                }
-            }
             is CalculatorEvent.Result -> {
-                makeOperation()
+                val result = resultOfTask(task.value)
+
+                if (result != null) {
+                    history.add(task.value)
+                    task.value = result
+                }
             }
             is CalculatorEvent.Percent -> {
-                _state.value = state.value.copy(
-                    currentNumber = (_state.value.currentNumber.toFloat() / 100).toString().replace(".0", "")
-                )
+
+            }
+            CalculatorEvent.Clear -> {
+                task.value = "0"
             }
         }
-
-        if(event != CalculatorEvent.Result) {
-            presentNumber.value = _state.value.currentNumber
-        }
-    }
-
-    private fun addOperator(char: Char) {
-        _state.value = state.value.copy(
-            lastNumber = _state.value.currentNumber.toFloat(),
-            currentNumber = "0",
-            char = char
-        )
-        presentNumber.value = "0"
-    }
-
-    private fun makeOperation() {
-        val fState = _state.value
-        var result: Float = 0f
-
-        when (fState.char) {
-            '+' -> {
-                result = fState.lastNumber + fState.currentNumber.toFloat()
-                presentNumber.value = result.toString()
-                resetState()
-            }
-            '-' -> {
-                result = fState.lastNumber - fState.currentNumber.toFloat()
-                presentNumber.value = result.toString()
-                resetState()
-            }
-            '*' -> {
-                result = fState.lastNumber * fState.currentNumber.toFloat()
-                presentNumber.value = result.toString()
-                resetState()
-            }
-            '/' -> {
-                if (fState.currentNumber.toFloat() == 0f) {
-//                    Toast.makeText(application, "You can`t divide via 0", Toast.LENGTH_LONG).show()
-                } else {
-                    result = fState.lastNumber / fState.currentNumber.toFloat()
-                    resetState()
-                }
-            }
-            else -> {
-//                Toast.makeText(application, "You need write new sentence", Toast.LENGTH_LONG).show()
-            }
-        }
-
-        presentNumber.value = result.toString().replace(".0", "")
-    }
-
-    private fun resetState() {
-        _state.value = state.value.copy(
-            lastNumber = 0f,
-            currentNumber = "0",
-            char = ' '
-        )
     }
 }
