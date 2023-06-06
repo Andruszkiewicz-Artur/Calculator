@@ -1,27 +1,19 @@
 package com.example.calculator.feature_calculator.presentation.calcualtor.compose
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.icons.twotone.Add
 import androidx.compose.material.icons.twotone.Close
-import androidx.compose.material.icons.twotone.Exposure
 import androidx.compose.material.icons.twotone.Remove
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,33 +24,41 @@ import com.example.calculator.feature_calculator.presentation.calcualtor.Calcula
 fun Calculator(
     viewModel: CalculatorViewModel
 ) {
-    val width = LocalContext.current.resources.configuration.screenWidthDp
-    val buttonSize = (width/5).dp
-    val breakSize = buttonSize/5
-    val fontSize = width/13
-
     Column(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(bottom = breakSize)
     ) {
+        LazyColumn(
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.Bottom,
+            modifier = Modifier
+                .fillMaxWidth(1f)
+                .padding(horizontal = 8.dp)
+        ) {
+            items(viewModel.history) {
+                Text(
+                    text = it,
+                    fontSize = 24.sp,
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f),
+                    fontWeight = FontWeight.Bold
+                )
+            }
+        }
         Text(
             text = viewModel.task.value,
-            fontSize = (fontSize * 1.75).sp,
+            fontSize = 64.sp,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(buttonSize / 5),
+                .padding(8.dp),
             textAlign = TextAlign.End,
-            color = MaterialTheme.colorScheme.onBackground
+            color = MaterialTheme.colorScheme.onBackground,
+            maxLines = 2
         )
 
-        Row(
-            modifier = Modifier
-                .padding(bottom = breakSize)
-        ) {
+        Row {
             ButtonItem(
                 char = 'C',
                 colorType = ColorOption.standard,
@@ -96,10 +96,7 @@ fun Calculator(
                 }
             )
         }
-        Row(
-            modifier = Modifier
-                .padding(bottom = breakSize)
-        ) {
+        Row {
             ButtonItem(
                 char = '7',
                 colorType = ColorOption.secondStandard,
@@ -137,10 +134,7 @@ fun Calculator(
                 }
             )
         }
-        Row(
-            modifier = Modifier
-                .padding(bottom = breakSize)
-        ) {
+        Row {
             ButtonItem(
                 char = '4',
                 colorType = ColorOption.secondStandard,
@@ -178,10 +172,7 @@ fun Calculator(
                 }
             )
         }
-        Row(
-            modifier = Modifier
-                .padding(bottom = breakSize)
-        ) {
+        Row {
 
             ButtonItem(
                 char = '1',
@@ -220,10 +211,7 @@ fun Calculator(
                 }
             )
         }
-        Row(
-            modifier = Modifier
-                .padding(bottom = breakSize)
-        ) {
+        Row {
             ButtonItem(
                 char = '0',
                 colorType = ColorOption.secondStandard,

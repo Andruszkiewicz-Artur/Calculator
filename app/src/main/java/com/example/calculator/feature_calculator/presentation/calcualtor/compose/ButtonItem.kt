@@ -33,7 +33,7 @@ fun ButtonItem(
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .padding(horizontal = 8.dp)
+            .padding(8.dp)
             .clip(CircleShape)
             .background(
                 color = color.second

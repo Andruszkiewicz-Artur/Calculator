@@ -36,7 +36,8 @@ class CalculatorViewModel: ViewModel() {
                 val result = resultOfTask(task.value)
 
                 if (result != null) {
-                    history.add(task.value)
+                    if(history.count() > 5) history.removeFirst()
+                    history.add("${task.value} = $result")
                     task.value = result
                 }
             }
