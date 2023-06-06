@@ -55,7 +55,7 @@ fun Calculator(
                 .padding(8.dp),
             textAlign = TextAlign.End,
             color = MaterialTheme.colorScheme.onBackground,
-            maxLines = 2
+            maxLines = 1
         )
 
         Row {

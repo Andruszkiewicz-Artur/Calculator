@@ -46,7 +46,7 @@ class CalculatorViewModel: ViewModel() {
                 val result = resultOfTask(value + "/100")
 
                 if (result != null) {
-                    history.add("(task.value)%")
+                    history.add("(${task.value})%")
                     task.value = result
                 }
             }
