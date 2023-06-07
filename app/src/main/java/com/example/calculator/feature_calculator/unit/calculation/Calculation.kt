@@ -61,6 +61,11 @@ fun resultOfTask(task: String): String? {
         return null
     }
 
+    if (numbersList.count() <= 1) {
+        Log.d("Problem with calculate", "none operation")
+        return null
+    }
+
     val size = charsList.count()
 
     for (i in 0 until size) {
@@ -90,10 +95,15 @@ fun resultOfTask(task: String): String? {
 }
 
 private val integerChars = '0'..'9'
+private val operatorChars = listOf('+', '-', '*', '^', '/')
 
 private fun isNumber(input: String): Boolean {
     var dotOccurred = 0
     return input.all { it in integerChars || it == '-' || it == '.' && dotOccurred++ < 1 }
+}
+
+private fun isOperationChar(input: String): Boolean {
+    return input.all { it in operatorChars }
 }
 
 fun isInteger(input: String) = input.all { it in integerChars }
